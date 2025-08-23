@@ -1,1 +1,737 @@
-<h1> Portfolio test </h1>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Portfolio — BRAIS ÁLVAREZ</title>
+
+  <!-- Fuente -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg: #0d0d0f;
+      --bg-2:#131317;
+      --text:#f5f5f5;
+      --muted:#b9b9c2;
+      --brand:#00e6d0;
+      --line:#202229;
+      --glass: rgba(255,255,255,0.05);
+      --shadow: 0 10px 35px rgba(0,0,0,0.5);
+      --radius: 18px;
+      --pad: 18px;
+      --speed: 800ms;
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
+    body{
+      font-family:"Poppins",system-ui,Segoe UI,Roboto,Arial,sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x:hidden;
+      scroll-behavior:smooth;
+    }
+
+    /* NAV */
+    .nav {
+      position: sticky; top:0; z-index: 1000;
+      backdrop-filter: blur(10px);
+      background: rgba(10,10,12,0.7);
+      border-bottom:1px solid var(--line);
+    }
+ .nav .wrap{
+   max-width:1200px; margin:auto; padding: 12px 12px;
+      display:flex; align-items:center; justify-content:space-between;flex-wrap:nowrap;
+      gap:50px;
+  }
+    .brand{display:flex; gap:10px; align-items:center}
+    .brand .dot{width:10px;height:10px;border-radius:999px;background:var(--brand);box-shadow:0 0 20px var(--brand)}
+    .brand h1{font-size:1.05rem;font-weight:700;letter-spacing:.5px}
+    .menu{display:flex; gap:18px; flex-wrap:wrap}
+    .menu a{
+      color:var(--text); text-decoration:none; font-size:.95rem;
+      opacity:.9; padding:8px 10px; border-radius:10px; transition: .25s;
+    }
+    .menu a:hover, .menu a.active { color:var(--brand); background:rgba(0,230,208,.08); }
+
+    /* HERO */
+    .hero{
+      position:relative; min-height: 96vh; display:grid; place-items:center;
+      isolation:isolate;
+    }
+    .hero video{
+      position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:-2;
+    }
+    .hero::after{
+      content:""; position:absolute; inset:0;
+      background: radial-gradient(60% 70% at 50% 30%, transparent, rgba(0,0,0,.65)) ,
+                  linear-gradient(to bottom, rgba(0,0,0,.3), rgba(0,0,0,.75));
+      z-index:-1;
+    }
+    .hero .content{
+      text-align:center; padding: 0 18px; max-width: 900px;
+      transform: translateY(16px); opacity:0; transition: var(--speed) ease;
+    }
+    .hero .content.reveal{transform:none; opacity:1;}
+    .hero h2{font-size: clamp(2.2rem, 6vw, 4rem); letter-spacing:1px;}
+    .hero p{margin-top:10px; color:var(--muted); font-size: clamp(1rem, 2.5vw, 1.25rem)}
+    .cta{
+      margin-top:24px; display:flex; gap:12px; justify-content:center; flex-wrap:wrap;
+    }
+    .btn{
+      padding:10px 16px; border-radius: 999px; border:1px solid var(--line);
+      background:var(--glass); color:var(--text); text-decoration:none; transition:.25s;
+    }
+    .btn:hover{ transform: translateY(-2px); box-shadow: var(--shadow); border-color:#2c2f39}
+    .btn.brand{ background: linear-gradient(120deg, var(--brand), #39ffd9); color:#00110e; font-weight:700; border:none }
+
+    /* SECCIONES */
+    section{
+      border-top:1px solid var(--line);
+      background:linear-gradient(180deg, rgba(255,255,255,.00), rgba(255,255,255,.01));
+    }
+    .wrap{max-width:1200px; margin:auto; padding: 70px 20px}
+    .title{
+      display:flex; align-items:center; gap:12px; margin-bottom: 26px;
+    }
+    .title .dash{width:34px;height:4px;border-radius:999px;background:var(--brand);box-shadow:0 0 16px var(--brand)}
+    .title h3{font-size: clamp(1.4rem, 3.2vw, 2rem); letter-spacing:.5px}
+
+    /* GRID MEDIA */
+    .grid{
+      display:grid; gap:20px;
+      grid-template-columns: repeat(12, 1fr);
+    }
+    .card{
+      grid-column: span 12;
+      background:var(--glass); border:1px solid var(--line); border-radius: var(--radius);
+      overflow:hidden; position:relative;
+      transform: translateY(24px); opacity:0; transition: .9s cubic-bezier(.2,.7,.2,1);
+      margin-bottom: 20px;
+    }
+    .card.reveal{transform:none; opacity:1;}
+    .card:hover{ box-shadow: var(--shadow); }
+
+    .media{position:relative; aspect-ratio: 16/9; overflow:hidden;}
+    .media video, .media iframe, .media img{ width:100%; height:100%; object-fit:cover; display:block; }
+    .media iframe{ border:0; }
+
+    .meta{
+      padding: var(--pad);
+      display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap;
+      background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.00));
+    }
+    .meta h4{font-size:1.05rem}
+    .meta p{color:var(--muted); font-size:.95rem}
+    .tags{display:flex; gap:8px; flex-wrap:wrap}
+    .tag{font-size:.8rem; padding:6px 10px; border-radius:999px; border:1px solid var(--line); background: rgba(255,255,255,.03)}
+  .fs-btn{
+    position:absolute;
+    bottom:10px; right:10px;
+    background:#00e6d0;
+    color:#000;
+    border:none;
+    padding:6px 10px;
+    border-radius:999px;
+    font-weight:700;
+    cursor:pointer;
+    opacity:.8;
+    transition:.25s;
+  }
+  .fs-btn:hover{ opacity:1; }
+    /* COLUMNAS RESPONSIVE */
+    .span-6{grid-column: span 6;}
+    .span-8{grid-column: span 8;}
+    .span-4{grid-column: span 4;}
+    @media (max-width: 980px){ .span-6,.span-8,.span-4{grid-column: span 12;} }
+  .modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    z-index: 9999;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+  }
+  .modal-content {
+    position: relative;
+    max-width: 60%;
+    max-height: 70%;
+  }
+  .modal video {
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius);
+  }
+  #closeModal {
+    position: absolute;
+    top: -15px;
+    right: -15px;
+    background: var(--brand);
+    border: none;
+    color: #000;
+    font-weight: bold;
+    font-size: 1.2rem;
+    width: 35px;
+    height: 35px;
+    border-radius: 999px;
+    cursor: pointer;
+    z-index: 10000;
+  }
+
+    /* CAROUSEL (imágenes existentes) */
+    .carousel{ position:relative; overflow:hidden; border-radius: var(--radius); border:1px solid var(--line); background:#0f1116}
+    .track{display:flex; transition: transform .6s ease;}
+    .slide{ min-width:100%; aspect-ratio:16/9; position:relative;}
+    .slide a{position:absolute; inset:0; display:block; }
+    .slide img{ width:100%; height:100%; object-fit:cover; display:block; }
+    .ctrl{
+      position:absolute; inset:auto 0 10px 0; display:flex; justify-content:center; gap:10px;
+    }
+    .dot{width:30px;height:30px;border-radius:999px;cursor:pointer;background:#3a3d46; border:1px solid #555}
+    .dot.active{ background: var(--brand); box-shadow:0 0 10px var(--brand) }
+
+    /* REVEAL ANIMS */
+    .revealY{ transform: translateY(30px); opacity:0; transition: var(--speed) ease }
+    .revealY.reveal{ transform:none; opacity:1 }
+
+    /* FOOTER */
+    footer{ border-top:1px solid var(--line); background:var(--bg-2); }
+    .foot{max-width:1200px; margin:auto; padding:40px 20px; color:var(--muted); text-align:center}
+    .foot a{color:var(--brand); text-decoration:none}
+    .foot a:hover{ text-decoration:underline }
+
+    /* ACCESIBILIDAD / REDUCED MOTION */
+    @media (prefers-reduced-motion: reduce){
+      .hero .content, .card, .revealY { transition:none !important }
+      .hero video{ display:none }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav" aria-label="Principal">
+    <div class="wrap">
+      <div class="brand"><span class="dot"></span><h1>BRAIS ÁLVAREZ — Technical & VFX Realtime Artist</h1></div>
+      <div class="menu">
+        <a href="#vfx" class="active">VFX Realtime</a>
+        <a href="#procedural">Procedural</a>
+        <a href="#projects">Proyectos</a>
+        <a href="#vp">Virtual Production</a>
+        <a href="#otros">Otros</a>
+        <a href="#contacto">Contacto</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="hero" id="home" role="banner" aria-label="Portada">
+    <video autoplay muted loop playsinline poster="images/OK.png" id="heroVideo">
+      <source src="videos/PortalDiss.mp4" type="video/mp4">
+    </video>
+    <div class="content">
+      <h2>BRAIS ÁLVAREZ</h2>
+      <p>Technical Artist & VFX — Unreal Engine, Blender, Unity , Realtime, Virtual Production.</p>
+      <div class="cta">
+        <a class="btn brand" href="#vfx">Ver trabajos</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- VFX REALTIME -->
+  <section id="vfx" aria-labelledby="vfx-title">
+    <div class="wrap">
+      <div class="title"><span class="dash"></span><h3 id="vfx-title">VFX Realtime</h3></div>
+
+      <div class="grid">
+        <!-- Combo VFX 1 -->
+        <article class="card span-6">
+          <div class="media">
+            <video id="combovfx1" muted loop playsinline preload="metadata">
+              <source src="videos/VFX_001.mp4" type="video/mp4">
+            </video>
+	<button class="fs-btn" data-target="combovfx1">⛶</button>
+
+          </div>
+          <div class="meta">
+            <div>
+              <h4>Combo VFX 1</h4>
+              <p>Bloque de proyectiles en tiempo real. Materiales + Niagara + Meshes</p>
+            </div>
+            <div class="tags">
+              <span class="tag">Unreal</span><span class="tag">Realtime</span><span class="tag">FX</span><span class="tag">Shaders</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Electric Strike -->
+        <article class="card span-6">
+          <div class="media">
+            <video id="e_strike" muted loop playsinline preload="metadata">
+              <source src="videos/e_strike_v01.mp4" type="video/mp4">
+            </video>
+	    <button class="fs-btn" data-target="e_strike">⛶</button>
+
+          </div>
+          <div class="meta">
+            <div>
+              <h4>Electric Strike</h4>
+              <p>Niagara + Materiales</p>
+            </div>
+            <div class="tags">
+             <span class="tag">Unreal</span><span class="tag">Realtime</span><span class="tag">FX</span><span class="tag">Shaders</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Ice Burst -->
+        <article class="card span-6">
+          <div class="media">
+            <video id="ice_vfx" muted loop playsinline preload="metadata">
+              <source src="videos/ice_v01.mp4" type="video/mp4">
+            </video>
+	    <button class="fs-btn" data-target="ice_vfx">⛶</button>
+
+          </div>
+          <div class="meta">
+            <div>
+              <h4>Ice Burst</h4>
+              <p>Ataque de hielo usando diferentes tácnicas y parametros dinámicos</p>
+            </div>
+            <div class="tags">
+                 <span class="tag">Unreal</span><span class="tag">Realtime</span><span class="tag">FX</span><span class="tag">Shaders</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Portal Dissolve -->
+        <article class="card span-6">
+          <div class="media">
+            <video id="portaldiss" muted loop playsinline preload="metadata">
+              <source src="videos/PortalDiss.mp4" type="video/mp4">
+            </video>
+	<button class="fs-btn" data-target="portaldiss">⛶</button>
+
+          </div>
+          <div class="meta">
+            <div>
+              <h4>Portal , Rain and Blueprint Dissolve (BP)</h4>
+              <p>Generacion de 3 efectos, la lluvia , el portal y la disolución del personaje. Esta se activa con un trigger tras acercarse al portal.</p>
+            </div>
+            <div class="tags">
+                     <span class="tag">Unreal</span><span class="tag">Realtime</span><span class="tag">FX</span><span class="tag">Shaders</span><span class="tag">Blueprints</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCEDURAL -->
+  <section id="procedural" aria-labelledby="proc-title">
+    <div class="wrap">
+      <div class="title"><span class="dash"></span><h3 id="proc-title">Procedural</h3></div>
+
+      <div class="grid">
+        <!-- GP + GN Render -->
+        <article class="card span-6">
+          <div class="media">
+            <video muted loop playsinline preload="metadata">
+              <source src="videos/GreasePencil_GN_rndr.mp4" type="video/mp4">
+            </video>
+          </div>
+          <div class="meta">
+            <div>
+              <h4>Grease Pencil + Geometry Nodes (Render)</h4>
+              <p>Linea a FX: dibuja con Grease Pencil y genera efectos animados editables.</p>
+            </div>
+            <div class="tags">
+              <span class="tag">Blender</span><span class="tag">Geometry Nodes</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- GP + GN Breakdown -->
+        <article class="card span-6">
+          <div class="media">
+            <video muted loop playsinline preload="metadata">
+              <source src="videos/GreasePencil_GN_Breakdown.mp4" type="video/mp4">
+            </video>
+		<button class="fs-btn" data-target="proc04">⛶</button>
+          </div>
+          <div class="meta">
+            <div>
+              <h4>Grease Pencil + GN (Breakdown)</h4>
+              <p>Ejemplo de uso, dibujo de linea, edicion de la misma y activacion del GN</p>
+            </div>
+            <div class="tags">
+              <span class="tag">Procedural</span><span class="tag">Tools</span>
+            </div>
+          </div>
+        </article>
+<!-- Cesta de mimbre -->
+
+<article class="card span-6">
+  <div class="media">
+    <video id="cistella" muted loop playsinline preload="metadata">
+      <source src="videos/Cistella_Mimbre.mp4" type="video/mp4">
+    </video>
+     <button class="fs-btn" data-target="cistella">⛶</button>
+  </div>
+  <div class="meta">
+    <div>
+      <h4>Cesta de mimbre procedural</h4>
+      <p>Modelo procedural de cesta de mimbre con algunos parametros modificables. Uso de pequeños scripts y de matematicas para realizar el modelo</p>
+    </div>
+    <div class="tags">
+      <span class="tag">Houdini</span><span class="tag">Procedural</span>
+    </div>
+  </div>
+</article>
+
+<article class="card span-6">
+  <div class="media">
+      <img src="images/cistella.png" alt="Background portada" />	
+  </div>
+  <div class="meta">
+    <div>
+      <h4>Cesta de Mimbre</h4>
+      <p>Render en Houdini de la cesta de mimbre añadiendo materiales básicos</p>
+    </div>
+    <div class="tags">
+      <span class="tag">Houdini</span><span class="tag">Procedural</span>
+    </div>
+  </div>
+</article>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROYECTOS -->
+  <section id="projects" aria-labelledby="proj-title">
+    <div class="wrap">
+      <div class="title"><span class="dash"></span><h3 id="proj-title">Proyectos</h3></div>
+
+      <div class="grid">
+        <!-- Escape The Chameleon -->
+        <article class="card span-8">
+          <div class="media">
+            <iframe
+              src="https://www.youtube.com/embed/KTaz1ymoL6k"
+              title="Escape The Chameleon — Gameplay"
+              loading="lazy" allow="autoplay; encrypted-media" allowfullscreen>
+            </iframe>
+          </div>
+          <div class="meta">
+            <div>
+              <h4>Escape The Chameleon (Roblox)</h4>
+              <p>Segundo juego en Roblox con +4.7M de visitas. Diseño técnico, scripting, VFX y ayuda  en modelado del entorno. Desarrollo en conjunto con <a href="https://www.linkedin.com/in/ricardmartingarcia/" target="_blank" rel="noopener" style="color: #00bfff;">Ricard Martin (Diseñador y programador)</a> y <a href="https://www.linkedin.com/in/abel-cano-montero-b97152153/" target="_blank" rel="noopener" style="color: #00bfff;">Abel Cano (Modelador)</a> </p></p>
+            </div>
+            <div class="tags">
+              <span class="tag">Roblox</span><span class="tag">Gameplay</span><span class="tag">Tráiler</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="card span-4">
+          <div class="media">
+            <iframe
+              src="https://www.youtube.com/embed/HXEAzE4_f2Y"
+              title="Escape de frog"
+              loading="lazy" allow="autoplay; encrypted-media" allowfullscreen>
+            </iframe>
+          </div>
+          <div class="meta">
+            <div>
+              <h4>Escape the Frog</h4>
+              <p>Predecesor de Escape the chameleon con +4.6M de visitas. Diseño de niveles, scripting, VFX y ayuda  en modelado del entorno. Desarrollo en conjunto con <a href="https://www.linkedin.com/in/ricardmartingarcia/" target="_blank" rel="noopener" style="color: #00bfff;">Ricard Martin</a>  </p>
+            </div>
+           <span class="tag">Roblox</span><span class="tag">Gameplay</span><span class="tag">Tráiler</span>
+          </div>
+        </article>
+
+        <article class="card span-4">
+          <div class="media">
+            <iframe
+              src="https://www.youtube.com/embed/LbyGuJAWfVY"
+              title="Fondo para actuacion TCMS2025"
+              loading="lazy" allow="autoplay; encrypted-media" allowfullscreen>
+            </iframe>
+          </div>
+          <div class="meta">
+            <div>
+              <h4>Fondo para actuacion TCMS2025</h4>
+              <p>Generacion del entorno , iluminacion , animacion y algunos materiales. Uso de render en tiempo real para la animación inicial y render con path tracer para los fondos estaticos de la actuación. Integración y composición realizada por <a href="https://www.linkedin.com/in/abel-cano-montero-b97152153/" target="_blank" rel="noopener" style="color: #00bfff;">Abel Cano.</a> </p>
+            </div>
+            <div class="tags"><span class="tag">UE5</span><span class="tag">Iluminación</span><span class="tag">UE5</span>TuCaraMeSuena2025</div>
+          </div>
+        </article>
+
+        <article class="card span-4">
+          <div class="media">
+            <iframe
+              src="https://www.youtube.com/embed/EIKE6bc1Wpo"
+              title="Uroboros"
+              loading="lazy" allow="autoplay; encrypted-media" allowfullscreen>
+            </iframe>
+          </div>
+          <div class="meta">
+            <div>
+              <h4>Uroboros</h4>
+              <p>Prototipo desarrollado durante la carrera. Engarcado de programación de mecánicas, cinematicas, iluminacion y technical artist.<br><a href="https://thunderforceiv.itch.io/uroboros" target="_blank" rel="noopener" style="color: #00bfff;">Uroboros en Itchio</a></p>
+            </div>
+            <div class="tags"><span class="tag">UE4</span><span class="tag">Tech Art</span></div>
+          </div>
+        </article>
+	     <article class="card span-4">
+          <div class="media">
+            <iframe
+              src="https://www.youtube.com/embed/zz6_hFg2z6Y"
+              title="VilaMagsys"
+              loading="lazy" allow="autoplay; encrypted-media" allowfullscreen>
+            </iframe>
+          </div>
+          <div class="meta">
+            <div>
+              <h4>VilaMagsys</h4>
+              <p>Juego desarrollado en Roblox para <a href="https://www.3cat.cat/tv3/sx3/" target="_blank" rel="noopener" style="color: #00bfff;">SX3</a>. Desarrollo del diseño, programación de mecánicas, programación de UI y enviroment artist.(Actualmente no esta disponible debido al cierre de los servidores)</p>
+            </div>
+            <div class="tags"><span class="tag">Roblox</span><span class="tag">Tráiler</span></div>
+          </div>
+        </article>
+	 <article class="card span-8">
+          <div class="media">
+            <iframe
+              src="https://www.youtube.com/embed/zVdny6-zmcU"
+              title="Bewitched"
+              loading="lazy" allow="autoplay; encrypted-media" allowfullscreen>
+            </iframe>
+          </div>
+          <div class="meta">
+            <div>
+              <h4>Bewitched</h4>
+              <p>TGF centrado en un prototipo desarrollado en Unity. Engarcado de programación de mecánicas, iluminacion y technical artist.<br><a href="https://pyramidcake.itch.io/bewitched" target="_blank" rel="noopener" style="color: #00bfff;">Bewitched</a></p>
+            </div>
+            <div class="tags"><span class="tag">Unity</span><span class="tag">TechArt</span></div>
+          </div>
+        </article>
+<article class="card span-4">
+          <div class="media">
+            <iframe
+              src="https://www.youtube.com/embed/PpTB9xEv00E"
+              title="PAW"
+              loading="lazy" allow="autoplay; encrypted-media" allowfullscreen>
+            </iframe>
+          </div>
+          <div class="meta">
+            <div>
+              <h4>PAW</h4>
+              <p>Prototipo en Unity desarrollado durante la carrera. Engarcado de programación de físicas, enviroment e UI .<br><a href="https://adrianfuster.itch.io/paw" target="_blank" rel="noopener" style="color: #00bfff;">PAW en Itchio</a></p>
+            </div>
+            <div class="tags"><span class="tag">Unity</span><span class="tag">Physics</span></div><span class="tag">UI</span></div></div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- VIRTUAL PRODUCTION -->
+  <section id="vp" aria-labelledby="vp-title">
+    <div class="wrap">
+      <div class="title"><span class="dash"></span><h3 id="vp-title">Virtual Production</h3></div>
+
+      <article class="card">
+        <div class="media">
+          <iframe
+            src="https://player.vimeo.com/video/836162130"
+            title="Producción Virtual — El Futuro Es Ahora"
+            loading="lazy"
+            allow="autoplay; fullscreen"
+            allowfullscreen>
+          </iframe>
+        </div>
+        <div class="meta">
+          <div>
+            <h4>“El Futuro Es Ahora”</h4>
+            <p>Creación de entornos en UE5 para rodaje con pantallas LED. Cambios en tiempo real durante filmación.</p>
+          </div>
+          <div class="tags"><span class="tag">Virtual Production</span><span class="tag">UE5</span><span class="tag">On-Set</span><span class="tag">Enviromet</span><span class="tag">Materials</span></div>
+        </div>
+	
+      </article>
+  <article class="card">
+        <div class="media">
+          <iframe
+            src="https://www.youtube.com/embed/Kmb6J3uOV4s"
+            title="Full Festa"
+            loading="lazy"
+            allow="autoplay; fullscreen"
+            allowfullscreen>
+          </iframe>
+        </div>
+        <div class="meta">
+          <div>
+            <h4>Full Festa</h4>
+            <p>Renders de entornos para rodaje con pantallas LED</p>
+          </div>
+          <div class="tags"><span class="tag">Virtual Production</span><span class="tag">UE5</span></div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- OTROS 
+  <section id="otros" aria-labelledby="otros-title">
+    <div class="wrap">
+      <div class="title"><span class="dash"></span><h3 id="otros-title">Otros</h3></div>
+      <div class="carousel revealY" id="carousel">
+        <div class="track">
+          <div class="slide">
+		
+            <a href="#home" aria-label="Portada">
+              <img src="images/OK.png" alt="Background portada" />
+            </a>
+          </div>
+          <div class="slide">
+            <a href="https://www.roblox.com/es/games/17654973101/NEW-MAP-Escape-The-Chameleon" target="_blank" rel="noopener" aria-label="Jugar Escape The Chameleon">
+              <img src="images/chamaleon.png" alt="Escape The Chameleon" />
+            </a>
+          </div>
+        </div>
+        <div class="ctrl" aria-hidden="true">
+          <span class="dot active"></span>
+          <span class="dot"></span>
+        </div>
+      </div>
+    </div>
+  </section>
+-->
+  <!-- CONTACTO -->
+  <section id="contacto" aria-labelledby="contact-title">
+    <div class="wrap">
+      <div class="title"><span class="dash"></span><h3 id="contact-title">Contacto</h3></div>
+      <div class="grid">
+        <article class="card span-8">
+          <div class="meta" style="justify-content:flex-start; gap:16px">
+            <div>
+              <h4>¿Colaboramos?</h4>
+              <p>Escribeme y estamos en contacto 🤗</p>
+            </div>
+            <div class="tags">
+              <a class="btn brand" href="mailto:balvarezescudero@gmail.com">balvarezescudero@gmail.com</a>
+              <a class="btn" href="www.linkedin.com/in/brais-alvarez" target="_blank" rel="noopener">LinkedIn</a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="foot">© 2025 Brais Álvarez — <a href="mailto:balvarezescudero@gmail.com">Contacto</a></div>
+  </footer>
+<div id="videoModal" class="modal">
+  <div class="modal-content">
+    <button id="closeModal">✖</button>
+    <video id="modalVideo" controls autoplay></video>
+  </div>
+</div>
+  <script>
+const modal = document.getElementById('videoModal');
+  const modalVideo = document.getElementById('modalVideo');
+  const closeModal = document.getElementById('closeModal');
+ modalVideo.loop = true;
+  document.querySelectorAll('.fs-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const video = btn.closest('.media').querySelector('video');
+      modalVideo.src = video.currentSrc; // copia la URL del video
+      modal.style.display = 'flex';
+      modalVideo.play().catch(()=>{});
+    });
+  });
+
+  closeModal.addEventListener('click', () => {
+    modalVideo.pause();
+    modalVideo.src = "";
+    modal.style.display = 'none';
+  });
+
+  modal.addEventListener('click', e => {
+    if(e.target === modal){ // cerrar al hacer clic fuera del video
+      modalVideo.pause();
+      modalVideo.src = "";
+      modal.style.display = 'none';
+    }
+  });
+    /* -------- Scroll reveal + menu active -------- */
+    const revealables = document.querySelectorAll('.card, .revealY, .hero .content');
+    const sections = [...document.querySelectorAll('section[id]')];
+    const menuLinks = document.querySelectorAll('.menu a');
+
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){
+          e.target.classList.add('reveal');
+          e.target.classList.add('revealY');
+        }
+      })
+    }, {threshold:0.2});
+    revealables.forEach(el=>io.observe(el));
+
+    const spy = new IntersectionObserver((entries)=>{
+      entries.forEach(entry=>{
+        if(entry.isIntersecting){
+          const id = '#' + entry.target.id;
+          menuLinks.forEach(a=>a.classList.toggle('active', a.getAttribute('href')===id));
+        }
+      })
+    }, {rootMargin: "-40% 0px -55% 0px"});
+    sections.forEach(s=>spy.observe(s));
+
+    /* -------- Auto play/pause videos in viewport -------- */
+    const vids = document.querySelectorAll('video');
+    const vidObserver = new IntersectionObserver((entries)=>{
+      entries.forEach(entry=>{
+        const v = entry.target;
+        if(entry.isIntersecting){
+          v.play().catch(()=>{});
+        } else {
+          v.pause();
+        }
+      })
+    }, {threshold:0.3});
+    vids.forEach(v=>vidObserver.observe(v));
+
+    /* -------- Carousel (usa solo imágenes existentes) -------- */
+    const carousel = document.getElementById('carousel');
+    if (carousel){
+      const track = carousel.querySelector('.track');
+      const slides = carousel.querySelectorAll('.slide');
+      const dots = carousel.querySelectorAll('.dot');
+      let idx = 0;
+      function go(i){
+        idx = (i + slides.length) % slides.length;
+        track.style.transform = `translateX(-${idx*100}%)`;
+        dots.forEach((d,k)=>d.classList.toggle('active', k===idx));
+      }
+      let t = setInterval(()=>go(idx+1), 4500);
+      carousel.addEventListener('mouseenter', ()=>clearInterval(t));
+      carousel.addEventListener('mouseleave', ()=> t = setInterval(()=>go(idx+1), 4500));
+      dots.forEach((d,i)=> d.addEventListener('click', ()=>go(i)));
+    }
+
+    /* -------- Reduce jank on mobile: pause hero if tab hidden -------- */
+    const heroVideo = document.getElementById('heroVideo');
+    document.addEventListener('visibilitychange', ()=>{
+      if(!heroVideo) return;
+      if(document.hidden) heroVideo.pause(); else heroVideo.play().catch(()=>{});
+    });
+
+  </script>
+</body>
+</html>
